@@ -1,17 +1,30 @@
+interface User {
+  name: string;
+  age: number;
+}
 export class DatabaseClassic {
   private static instance: DatabaseClassic | null = null;
-
+  private users: User[] = [];
   private constructor() {}
 
-  public static getInstance(): DatabaseClassic {
+  static getInstance(): DatabaseClassic {
     if (DatabaseClassic.instance === null) {
       DatabaseClassic.instance = new DatabaseClassic();
     }
     return DatabaseClassic.instance;
   }
+
+  add(user: User): void {
+    this.users.push(user);
+  }
+
+  remove(index: number): void {
+    this.users.splice(index, 1);
+  }
+
+  show(): void {
+    for (const user of this.users) {
+      console.log(user);
+    }
+  }
 }
-
-const db1 = DatabaseClassic.getInstance();
-const db2 = DatabaseClassic.getInstance();
-
-console.log(db1 === db2);
